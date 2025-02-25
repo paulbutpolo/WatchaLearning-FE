@@ -107,8 +107,7 @@ function Videos() {
         eventSource.onmessage = (event) => {
           const data = JSON.parse(event.data);
           setTranscodingProgress(data.progress);
-          console.log(data.progress)
-          // Close EventSource when transcoding is complete
+          console.log(`${data.progress}%`)
           if (data.progress >= 100) {
             setTimeout(() => {
               eventSource.close();
@@ -120,7 +119,7 @@ function Videos() {
         };
   
         eventSource.onerror = () => {
-          console.error("EventSource failed, Usually this triggered at end of force update in back end");
+          // console.error("EventSource failed, Usually this triggered at end of force update in back end");
           eventSource.close();
           setIsUploading(false);
         };
