@@ -4,17 +4,36 @@ import Home from './Home/Home';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
+import { useEffect, useState } from 'react';
 
 const App = () => {
-  // Check if the user is authenticated (e.g., by checking localStorage)
-  // const isAuthenticated = !!localStorage.getItem('authToken');
-  const isAuthenticated = true
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // Add a loading state
+
+  // Check if the user is authenticated on initial load
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+
+    if (token) {
+      // Assume the token is valid (backend will verify it on protected routes)
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+
+    setLoading(false); // Set loading to false after checking the token
+  }, []);
+
+  // Show a loading spinner or message while checking authentication
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/signup" element={<Signup />} />
 
         {/* Protected routes */}

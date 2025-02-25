@@ -5,9 +5,12 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    // Clear the token and user role from localStorage
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
-    navigate('/login'); // Redirect to the login page after logout
+
+    // Redirect to the login page
+    navigate('/login');
   };
 
   return (

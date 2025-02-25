@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
-    navigate('/login'); // Redirect to the login page after logout
+    navigate('/login');
   };
 
   const handleTabClick = (tab) => {
