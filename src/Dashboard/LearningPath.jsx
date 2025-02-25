@@ -41,14 +41,20 @@ const LearningPath = () => {
   const handleCreateLearningPath = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+      alert('You must be logged in to upload a video.');
+      return;
+    }
+
     const newLearningPath = {
       title,
       description,
       videos: selectedVideos.map((video) => ({
         videoId: video.id,
         order: video.order,
-      })),
-      createdBy: 'Admin', // Replace with actual user ID from auth
+      }))
     };
 
     try {
@@ -56,6 +62,7 @@ const LearningPath = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newLearningPath),
       });

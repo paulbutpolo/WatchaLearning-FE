@@ -11,7 +11,10 @@ function Videos() {
   const [transcodingProgress, setTranscodingProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [currentPlayingVideo, setCurrentPlayingVideo] = useState(null);
+  const [description, setDescription] = useState(''); // State for the video title
   const videoRef = useRef(null);
+
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetchVideos();
@@ -22,63 +25,8 @@ function Videos() {
     setVideos(res.data);
   };
 
-  // const uploadVideo = async () => {
-  //   if (!videoFile) return;
-  
-  //   setIsUploading(true);
-  //   setUploadProgress(0);
-  //   setTranscodingProgress(0);
-  
-  //   const formData = new FormData();
-  //   formData.append("video", videoFile);
-  
-  //   try {
-  //     const uploadRes = await axios.post("http://localhost:3000/api/videos/upload", formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //       onUploadProgress: (progressEvent) => {
-  //         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-  //         setUploadProgress(percentCompleted);
-  //       },
-  //       timeout: 1800000, // 30-minute timeout
-  //     });
-  
-  //     // Use the original filename for progress tracking
-  //     const { originalFilename } = uploadRes.data;
-  
-  //     if (originalFilename) {
-  //       const eventSource = new EventSource(`http://localhost:3000/api/videos/progress/${encodeURIComponent(originalFilename)}`);
-  
-  //       eventSource.onmessage = (event) => {
-  //         const data = JSON.parse(event.data);
-  //         setTranscodingProgress(data.progress);
-  
-  //         // Close EventSource when transcoding is complete
-  //         if (data.progress >= 100) {
-  //           eventSource.close();
-  //           setIsUploading(false);
-  //           fetchVideos(); // Refresh video list
-  //         }
-  //       };
-  
-  //       eventSource.onerror = () => {
-  //         console.error("EventSource failed");
-  //         eventSource.close();
-  //         setIsUploading(false);
-  //       };
-  
-  //       // Clean up EventSource on component unmount
-  //       return () => {
-  //         eventSource.close();
-  //       };
-  //     }
-  //   } catch (error) {
-  //     console.error("Upload failed:", error);
-  //     alert("Upload failed. Please try again.");
-  //     setIsUploading(false);
-  //   }
-  // };
-
-  const uploadVideo = async () => {
+  const uploadVideo = async (e) => {
+    e.preventDefault();
     if (!videoFile) return;
   
     setIsUploading(true);
@@ -87,10 +35,11 @@ function Videos() {
   
     const formData = new FormData();
     formData.append("video", videoFile);
+    formData.append("description", description);
   
     try {
       const uploadRes = await axios.post("http://localhost:3000/api/videos/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}`},
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setUploadProgress(percentCompleted);
@@ -279,6 +228,11 @@ function Videos() {
       await axios.post("http://localhost:3000/api/tracks/save-progress", {
         videoId,
         currentProgress: currentTime,
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       console.log("Progress saved");
     } catch (error) {
@@ -290,6 +244,10 @@ function Videos() {
     try {
       const res = await axios.get("http://localhost:3000/api/tracks/get-progress", {
         params: { videoId },
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       return res.data.currentProgress || 0;
     } catch (error) {
@@ -301,11 +259,22 @@ function Videos() {
   return (
     <div style={{ padding: 20 }}>
       <h2>HLS Video Streaming</h2>
-
-      <input type="file" accept="video/mkv/*" onChange={(e) => setVideoFile(e.target.files[0])} />
-      <button onClick={uploadVideo} disabled={isUploading}>
-        {isUploading ? "Uploading..." : "Upload Video"}
-      </button>
+      <form onSubmit={uploadVideo}>
+        <div>
+          <label>Description:</label>
+          <textarea
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Select Video File:</label>
+          <input type="file" accept="video/mkv/*" onChange={(e) => setVideoFile(e.target.files[0])} />
+        </div>
+        <button disabled={isUploading}>{isUploading ? "Uploading..." : "Upload Video"}</button>
+      </form>
 
       {isUploading && (
         <div style={{ marginTop: 10 }}>
