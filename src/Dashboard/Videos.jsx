@@ -167,8 +167,10 @@ function Videos() {
     }
   };
 
-  const playVideo = (video) => {
+  const playVideo = async (video) => {
     setCurrentPlayingVideo(video);
+    const savedProgress = await getProgress(video._id);
+
     if (Hls.isSupported()) {
       const hls = new Hls({
         debug: true, // Enable debug mode for troubleshooting
@@ -180,7 +182,8 @@ function Videos() {
   
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log("Manifest parsed, starting playback");
-        videoRef.current.play().catch(e => console.error("Playback failed:", e));
+        videoRef.current.currentTime = savedProgress; // Set saved progress
+        videoRef.current.play().catch((e) => console.error("Playback failed:", e));
       });
   
       hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED, (event, data) => {
@@ -213,7 +216,12 @@ function Videos() {
     } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
       // Fallback for Safari
       videoRef.current.src = video.url;
+      videoRef.current.currentTime = savedProgress; // Set saved progress
     }
+
+    videoRef.current.onpause = () => {
+      saveProgress(video._id, videoRef.current.currentTime);
+    };
   };
 
   const adjustSubtitleSync = async (videoId, language, offset) => {
@@ -263,6 +271,30 @@ function Videos() {
     } catch (error) {
       console.error("Error downloading video:", error);
       alert("Failed to download video");
+    }
+  };
+
+  const saveProgress = async (videoId, currentTime) => {
+    try {
+      await axios.post("http://localhost:3000/api/tracks/save-progress", {
+        videoId,
+        currentProgress: currentTime,
+      });
+      console.log("Progress saved");
+    } catch (error) {
+      console.error("Error saving progress:", error);
+    }
+  };
+  
+  const getProgress = async (videoId) => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/tracks/get-progress", {
+        params: { videoId },
+      });
+      return res.data.currentProgress || 0;
+    } catch (error) {
+      console.error("Error fetching progress:", error);
+      return 0;
     }
   };
   
