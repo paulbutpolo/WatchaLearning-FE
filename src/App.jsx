@@ -5,6 +5,9 @@ import Dashboard from './Dashboard/Dashboard';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 import { useEffect, useState } from 'react';
+import Course from './Course/Course';
+import CourseDetail from './Course/CourseDetail';
+import VideoPlayer from './Course/VideoPlayer';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,6 +42,9 @@ const App = () => {
         {/* Protected routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/course" element={<Course />} />
+          <Route path="/course/:id" element={<CourseDetail />} />
+          <Route path="/course/:id/video/:videoId" element={<VideoPlayer />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 

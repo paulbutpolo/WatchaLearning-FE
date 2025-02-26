@@ -24,8 +24,9 @@ a:hover {
 
 body {
   margin: 0;
+  min-height: 100vh; /* Ensure body takes at least the full viewport height */
   display: flex;
-  place-items: center;
+  flex-direction: column; /* Stack children vertically */
 }
 
 h1 {

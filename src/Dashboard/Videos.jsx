@@ -125,7 +125,7 @@ function Videos() {
         debug: true, // Enable debug mode for troubleshooting
       });
       window.currentHls = hls;
-       setCurrentPlayingVideo(video);
+      // setCurrentPlayingVideo(video);
       hls.loadSource(video.url);
       hls.attachMedia(videoRef.current);
   

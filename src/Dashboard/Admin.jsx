@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './css/Dashboard.css'; // Reuse Home.css for consistent styling
+import SideBar from '../shared/Sidebar';
 import LearningPath from './LearningPath'; // Import the LearningPath component
 import Videos from './Videos'; // Import the new Videos component
+import './css/Dashboard.css'; // Reuse Home.css for consistent styling
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -20,32 +21,11 @@ const AdminDashboard = () => {
 
   return (
     <div className="container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>My App</h2>
-        <nav>
-          <ul>
-            <li>
-              <button onClick={() => navigate('/home')}>Home</button>
-            </li>
-            <li>
-              <button onClick={() => navigate('/settings')}>Settings</button>
-            </li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
+      <SideBar />
       <div className="main-content">
-        {/* Header */}
         <header className="header">
           <h1>Admin Dashboard</h1>
         </header>
-
-        {/* Content */}
         <main className="content">
           <h2>Welcome, Admin!</h2>
           <p>Manage users, settings, and more.</p>

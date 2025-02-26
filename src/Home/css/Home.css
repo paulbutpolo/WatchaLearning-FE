@@ -46,6 +46,7 @@ body {
 .main-content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1; /* This makes the main content take up the remaining space */
 }
 
 .header {
@@ -58,6 +59,7 @@ body {
 .content {
   padding: 20px;
   background: #f4f4f4;
+  flex-grow: 1; /* This makes the content area take up the remaining space */
 }
 
 button {
