@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       const token = localStorage.getItem('authToken');
-
+      console.log(token)
       if (!token) {
         setError('No token found. Please log in.');
         setLoading(false);
