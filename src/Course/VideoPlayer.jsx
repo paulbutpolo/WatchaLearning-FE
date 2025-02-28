@@ -67,14 +67,15 @@ const VideoPlayer = () => {
 
   // Fetch the saved progress for the current video
   const fetchProgress = async () => {
+    console.log("fething progress..")
     try {
       const response = await axios.get("http://localhost:3000/api/tracks/get-progress", {
-        params: { videoId },
+        params: { videoId, courseId: id },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("fetch Progress response:", response)
       if (response.data.currentProgress && videoRef.current) {
         console.log("Resuming from:", response.data.currentProgress);
         videoRef.current.currentTime = response.data.currentProgress; // Set the video to the saved progress
@@ -119,6 +120,7 @@ const VideoPlayer = () => {
       try {
         const response = await axios.post("http://localhost:3000/api/tracks/save-progress", {
           videoId,
+          courseId: id,
           currentProgress: currentTime,
         }, {
           headers: {

@@ -1,20 +1,19 @@
-.content-test {
-  margin: 20px;
-}
-
-.card {
+.subscription-item {
   border: 1px solid #ccc;
-  border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.card h3 {
-  margin-top: 0;
+.subscription-item h3 {
+  margin: 0 0 8px 0;
 }
 
-.card button {
+.subscription-item p {
+  margin: 0 0 16px 0;
+}
+
+.subscription-item button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -23,6 +22,6 @@
   cursor: pointer;
 }
 
-.card button:hover {
+.subscription-item button:hover {
   background-color: #0056b3;
 }

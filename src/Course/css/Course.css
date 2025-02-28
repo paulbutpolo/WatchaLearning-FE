@@ -1,12 +1,20 @@
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-button:hover {
-  background-color: #45a049;
+.courses-table th, .courses-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.courses-table th {
+  background-color: var(--tertiary-color);
+}
+
+.courses-table tr:hover {
+  background-color: var(--secondary-color);
+  cursor: pointer;
 }

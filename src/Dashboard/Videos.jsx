@@ -16,6 +16,22 @@ function Videos() {
 
   const token = localStorage.getItem('authToken');
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const videosPerPage = 5;
+
+  // Get paginated videos
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos = videos.slice(indexOfFirstVideo, indexOfLastVideo);
+
+  const nextPage = () => {playVideo
+    if (indexOfLastVideo < videos.length) setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
   useEffect(() => {
     fetchVideos();
   }, []);
@@ -118,27 +134,29 @@ function Videos() {
 
   const playVideo = async (video) => {
     setCurrentPlayingVideo(video);
-    const savedProgress = await getProgress(video._id);
+    // const savedProgress = await getProgress(video._id);
 
     if (Hls.isSupported()) {
       const hls = new Hls({
-        debug: true, // Enable debug mode for troubleshooting
+        // debug: true, // Enable debug mode for troubleshooting
       });
       window.currentHls = hls;
       // setCurrentPlayingVideo(video);
       hls.loadSource(video.url);
+      console.log("tested", video.url)
       hls.attachMedia(videoRef.current);
-  
+      hls.on(Hls.Events.ERROR, (event, data) => {
+        console.error('HLS Error:', data);
+      });
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log("Manifest parsed, starting playback");
-        videoRef.current.currentTime = savedProgress; // Set saved progress
-        videoRef.current.play().catch((e) => console.error("Playback failed:", e));
+        // videoRef.current.currentTime = savedProgress; // Set saved progress
+        // videoRef.current.play().catch((e) => console.error("Playback failed:", e));
       });
   
       hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED, (event, data) => {
         console.log("Subtitle tracks updated:", data.subtitleTracks);
         if (data.subtitleTracks.length > 0) {
-          // Automatically enable the first subtitle track
           hls.subtitleTrack = 0;
         }
       });
@@ -156,28 +174,27 @@ function Videos() {
               hls.recoverMediaError();
               break;
             default:
-              // Cannot recover
+              console.log("Unrecoverable error");
               hls.destroy();
               break;
           }
         }
       });
     } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
-      // Fallback for Safari
       videoRef.current.src = video.url;
-      videoRef.current.currentTime = savedProgress; // Set saved progress
+      // videoRef.current.currentTime = savedProgress;
     }
-
-    videoRef.current.onpause = () => {
-      saveProgress(video._id, videoRef.current.currentTime);
-    };
+  
+    // videoRef.current.onpause = () => {
+    //   saveProgress(video._id, videoRef.current.currentTime);
+    // };
   };
 
-  const adjustSubtitleSync = async (videoId, language, offset) => {
+  const adjustSubtitleSync = async (videoId, videoName, language, offset) => {
     try {
       const currentTime = videoRef.current.currentTime; // Save current playback position
   
-      await axios.post(`http://localhost:3000/api/video/${videoId}/adjust-subtitle`, {
+      await axios.post(`http://localhost:3000/api/video/${videoName}/adjust-subtitle`, {
         language,
         timeOffset: offset
       });
@@ -223,38 +240,38 @@ function Videos() {
     }
   };
 
-  const saveProgress = async (videoId, currentTime) => {
-    try {
-      await axios.post("http://localhost:3000/api/tracks/save-progress", {
-        videoId,
-        currentProgress: currentTime,
-      }, 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      console.log("Progress saved");
-    } catch (error) {
-      console.error("Error saving progress:", error);
-    }
-  };
+  // const saveProgress = async (videoId, currentTime) => {
+  //   try {
+  //     await axios.post("http://localhost:3000/api/tracks/save-progress", {
+  //       videoId,
+  //       currentProgress: currentTime,
+  //     }, 
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     console.log("Progress saved");
+  //   } catch (error) {
+  //     console.error("Error saving progress:", error);
+  //   }
+  // };
   
-  const getProgress = async (videoId) => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/tracks/get-progress", {
-        params: { videoId },
-      },{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return res.data.currentProgress || 0;
-    } catch (error) {
-      console.error("Error fetching progress:", error);
-      return 0;
-    }
-  };
+  // const getProgress = async (videoId) => {
+  //   try {
+  //     const res = await axios.get("http://localhost:3000/api/tracks/get-progress", {
+  //       params: { videoId },
+  //     },{
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     return res.data.currentProgress || 0;
+  //   } catch (error) {
+  //     console.error("Error fetching progress:", error);
+  //     return 0;
+  //   }
+  // };
   
   return (
     <div style={{ padding: 20 }}>
@@ -293,12 +310,17 @@ function Videos() {
       )}
 
       <h3>Available Videos:</h3>
-      <ul>
-        {videos.map((video, index) => (
-          <li key={index}>
-            {video.title} - <button onClick={() => playVideo(video)}>Play</button>
-            <button onClick={() => deleteVideo(video._id)}>Delete</button>
-            <div>
+      <ul className="video-list">
+        {currentVideos.map((video, index) => (
+          <li key={index} className="video-item">
+            <div className="video-info">
+              <strong>{video.title}</strong>
+              <div className="video-actions">
+                <button onClick={() => playVideo(video)}>▶ Play</button>
+                <button className="delete-btn" onClick={() => deleteVideo(video._id)}>🗑 Delete</button>
+              </div>
+            </div>
+            <div className="download-buttons">
               <button onClick={() => downloadVideo(video._id, video.name, "1080p")}>Download 1080p</button>
               <button onClick={() => downloadVideo(video._id, video.name, "720p")}>Download 720p</button>
               <button onClick={() => downloadVideo(video._id, video.name, "480p")}>Download 480p</button>
@@ -331,10 +353,10 @@ function Videos() {
                     <li key={i}>
                       {sub.language}
                       <div>
-                        <button onClick={() => adjustSubtitleSync(video._id, sub.language, -500)}>-0.5s</button>
-                        <button onClick={() => adjustSubtitleSync(video._id, sub.language, -100)}>-0.1s</button>
-                        <button onClick={() => adjustSubtitleSync(video._id, sub.language, 100)}>+0.1s</button>
-                        <button onClick={() => adjustSubtitleSync(video._id, sub.language, 500)}>+0.5s</button>
+                        <button onClick={() => adjustSubtitleSync(video._id, video.title, sub.language, -500)}>-0.5s</button>
+                        <button onClick={() => adjustSubtitleSync(video._id, video.title, sub.language, -100)}>-0.1s</button>
+                        <button onClick={() => adjustSubtitleSync(video._id, video.title, sub.language, 100)}>+0.1s</button>
+                        <button onClick={() => adjustSubtitleSync(video._id, video.title, sub.language, 500)}>+0.5s</button>
                       </div>
                     </li>
                   ))}
@@ -344,6 +366,12 @@ function Videos() {
           </li>
         ))}
       </ul>
+
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
+        <span> Page {currentPage} of {Math.ceil(videos.length / videosPerPage)} </span>
+        <button onClick={nextPage} disabled={indexOfLastVideo >= videos.length}>Next</button>
+      </div>
 
       <h3>Video Player:</h3>
       <video ref={videoRef} controls width="640" height="360"></video>

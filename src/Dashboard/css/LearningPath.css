@@ -1,0 +1,93 @@
+.learning-path {
+  padding: 20px;
+}
+
+.learning-path-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field, .textarea-field, .input-order {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.textarea-field {
+  height: 80px;
+}
+
+.video-selection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-btn, .cancel-btn, .edit-btn, .delete-btn {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  background-color: #28a745;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+}
+
+.delete-btn {
+  background-color: #d9534f;
+}
+
+.learning-path-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.learning-path-table th, .learning-path-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.learning-path-table th {
+  background-color: #f4f4f4;
+}

@@ -19,14 +19,12 @@ const Dashboard = () => {
       }
 
       try {
-        // Fetch the user's role from the backend
         const response = await axios.get('http://localhost:3000/api/users/role', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        // Set the user role
         setUserRole(response.data.role);
       } catch (error) {
         console.error('Error fetching user role:', error);
@@ -40,14 +38,13 @@ const Dashboard = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading spinner or message
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Show an error message
+    return <div>{error}</div>; 
   }
 
-  // Render the appropriate dashboard based on the user's role
   if (userRole === 'admin') {
     return <AdminDashboard />;
   } else {

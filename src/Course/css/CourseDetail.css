@@ -1,0 +1,42 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start (left) */
+  padding: 20px; /* Add some padding for spacing */
+  height: auto; /* Remove fixed height to allow natural flow */
+  text-align: left; /* Align text to the left */
+}
+
+.description {
+  margin-bottom: 20px; /* Add spacing below the description */
+}
+
+.videos-list {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+.videos-list h3 {
+  margin-bottom: 10px;
+}
+
+.videos-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.video-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+.video-order, .video-id {
+  font-weight: bold;
+}

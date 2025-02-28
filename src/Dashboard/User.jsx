@@ -1,18 +1,40 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideBar from '../shared/Sidebar';
-import './css/Dashboard.css';
+import axios from 'axios';
+import './css/User.css';
 
 const UserDashboard = () => {
+  const [subscriptions, setSubscriptions] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Clear the token and user role from localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userRole');
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get('http://localhost:3000/api/subscriber', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setSubscriptions(response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Error fetching last watched video');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Redirect to the login page
-    navigate('/login');
+    fetchSubscription();
+  }, []);
+
+  const handleButtonClick = (courseId) => {
+    console.log('Button clicked for course ID:', courseId);
+    navigate(`/course/${courseId}`);
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="container">
@@ -21,13 +43,16 @@ const UserDashboard = () => {
         <header className="header">
           <h1>User Dashboard</h1>
         </header>
-        <main className="content">
-          <h2>Welcome, User!</h2>
-          <p>Here you can access your personal content and settings.</p>
-          <div>
-            <h3>Your Data</h3>
-            <p>This is where user-specific data will be displayed.</p>
-          </div>
+        <main className="content-test">
+          {subscriptions.map((subscription, index) => (
+            <div key={subscription.id.toString()} className="subscription-item">
+              <h3>{subscription.title}</h3>
+              <p>Progress: {subscription.progress}</p>
+              <button onClick={() => handleButtonClick(subscription.id)}>
+                View Details
+              </button>
+            </div>
+          ))}
         </main>
       </div>
     </div>

@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './css/Auth.css'
+import './css/Auth.css';
 
 const Signup = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rePassword, setRepassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSignup = async (e) => {
     e.preventDefault(); // Prevent form submission refresh
 
     try {
-      const response = await axios.post('http://localhost:3000/api/signup', { username, email, password });
+      axios.post('http://localhost:3000/api/signup', { username, email, password });
       
       // Notify the user of successful signup
       alert('Signup successful! Please log in.');
@@ -28,40 +29,47 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>Signup Page</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSignup}>
-        <div>
-          <label>Username:</label>
+    <div className="page-container">
+      <div className="login-container">
+        <h1>Signup Page</h1>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <form className="login-form" onSubmit={{handleSignup}}>
           <input
             type="text"
+            placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label>Email:</label>
           <input
-            type="email"
+            type="text"
+            placeholder='Email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label>Password:</label>
           <input
             type="password"
+            placeholder='********'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-      <button onClick={() => navigate('/login')}>Go to Login</button>
+          <input
+            type="password"
+            placeholder='********'
+            value={rePassword}
+            onChange={(e) => setRepassword(e.target.value)}
+            required
+          />
+          <button type="submit">Sign up</button>
+        </form>
+        <p className="register-link">
+          Already registered? Click <a onClick={() => navigate('/login')}> here</a>
+        </p>
+      </div>
+      <div className="main-content">
+      </div>
     </div>
   );
 };

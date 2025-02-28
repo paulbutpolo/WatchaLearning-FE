@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import SideBar from '../shared/Sidebar';
+import './css/CourseDetail.css'
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -114,15 +115,18 @@ const CourseDetail = () => {
           )}
         </header>
         <main className="content">
-          <p>{learningPath.description}</p>
-          <h2>Videos</h2>
-          <ul>
-            {learningPath.videos.map((video, index) => (
-              <li key={index} onClick={() => handleVideoClick(video.videoId)}>
-                <p>Episode {video.order}: {video.videoId}</p>
-              </li>
-            ))}
-          </ul>
+          <p className="description">{learningPath.description}</p>
+          <div className="videos-list">
+            <h3>Videos</h3>
+            <ul>
+              {learningPath.videos.map((video, index) => (
+                <li key={index} className="video-item" onClick={() => handleVideoClick(video.videoId)}>
+                  <span className="video-order">Order: {video.order}</span>
+                  <span className="video-id">Video ID: {video.videoId}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </main>
       </div>
     </div>

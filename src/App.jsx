@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import Course from './Course/Course';
 import CourseDetail from './Course/CourseDetail';
 import VideoPlayer from './Course/VideoPlayer';
+import LearningPathDetail from './Dashboard/LearningPathDetail'
+import NotFound from './NotFound';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +48,7 @@ const App = () => {
           <Route path="/course/:id" element={<CourseDetail />} />
           <Route path="/course/:id/video/:videoId" element={<VideoPlayer />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/:id" element={<LearningPathDetail />} />
         </Route>
 
         {/* Default route */}
@@ -61,7 +64,7 @@ const App = () => {
         />
 
         {/* Fallback route for 404 */}
-        <Route path="*" element={<div>404 Not Found</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

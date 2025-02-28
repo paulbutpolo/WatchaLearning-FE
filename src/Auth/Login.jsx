@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './css/Auth.css';
 
 const Login = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const [identifier, setIdentifier] = useState(''); // Can be email or username
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -12,19 +13,14 @@ const Login = ({ setIsAuthenticated }) => {
     e.preventDefault();
 
     try {
-      // Send the identifier (email or username) and password to the backend
       const response = await axios.post('http://localhost:3000/api/login', {
         identifier,
         password,
       });
-
-      // Store the token in localStorage
+      
       localStorage.setItem('authToken', response.data.token);
-
-      // Update the authentication state
       setIsAuthenticated(true);
 
-      // Redirect to the home page
       navigate('/home');
     } catch (error) {
       setError('Invalid email/username or password');
@@ -33,31 +29,33 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email or Username:</label>
+    <div className="page-container">
+      <div className="login-container">
+        <h1>Login Page</h1>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
+            placeholder='Username or Email'
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label>Password:</label>
           <input
             type="password"
+            placeholder='********'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </div>
-        <button type="submit">Log In</button>
-      </form>
-      <button onClick={() => navigate('/signup')}>Go to Signup</button>
+          <button type="submit">Login</button>
+        </form>
+        <p className="register-link">
+          Not registered? Click <a onClick={() => navigate('/signup')}> here</a>
+        </p>
+      </div>
+      <div className="main-content">
+      </div>
     </div>
   );
 };

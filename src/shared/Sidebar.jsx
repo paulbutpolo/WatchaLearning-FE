@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import './Sidebar.css'
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -10,28 +11,16 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="sidebar">
+    <div className="sidebar-container">
       <h2>My App</h2>
-      <nav>
-        <ul>
-          <li>
-            <button onClick={() => navigate("/home")}>Home</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/dashboard")}>Dashboard</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/course")}>Course</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/settings")}>Settings</button>
-          </li>
-          <li>
-            <button onClick={handleLogout}>Log Out</button>
-          </li>
-        </ul>
+      <nav className="sidebar-nav">
+        <button onClick={() => navigate("/home")}>Home</button>
+        <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+        <button onClick={() => navigate("/course")}>Course</button>
+        <button onClick={() => navigate("/settings")}>Settings</button>
+        <button onClick={handleLogout}>Log Out</button>
       </nav>
-    </aside>
+    </div>
   );
 };
 
