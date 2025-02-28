@@ -10,8 +10,11 @@ const VideoPlayer = () => {
   const [subscription, setSubscription] = useState(null);
   const [notes, setNotes] = useState([]);
   const [noteText, setNoteText] = useState("");
+  const [resources, setResources] = useState([]);
   const [editingNoteId, setEditingNoteId] = useState(null);
+  const [selectedResolution, setSelectedResolution] = useState(null);
   const videoRef = useRef(null);
+  const hlsRef = useRef(null);
 
   const token = localStorage.getItem('authToken'); // Get the auth token from localStorage
   
@@ -60,6 +63,19 @@ const VideoPlayer = () => {
       }
     };
 
+    const fetchResource = async () => {
+      try {
+        const resourcesResponse = await fetch(
+          `http://localhost:3000/api/learning-paths/${id}/resources`
+        );
+        const resourcesData = await resourcesResponse.json();
+        setResources(resourcesData);
+      } catch(error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchResource();
     fetchVideo();
     fetchSubscription();
     fetchNotes();
@@ -187,6 +203,43 @@ const VideoPlayer = () => {
     }
   };
 
+  const handleResolutionChange = (resolution) => {
+    setSelectedResolution(resolution);
+    if (hlsRef.current) {
+      const levels = hlsRef.current.levels; // Access levels from the HLS instance
+      const levelIndex = levels.findIndex(level => level.height === parseInt(resolution));
+      if (levelIndex !== -1) {
+        hlsRef.current.currentLevel = levelIndex; // Manually set the resolution
+      }
+    }
+  };
+
+  const downloadVideo = async (videoId, videoName, resolution) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/video/${videoId}/download/${resolution}`,
+        {
+          responseType: "blob", // Ensure the response is treated as a binary file
+        }
+      );
+  
+      // Create a download link for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${videoName}_${resolution}.mp4`); // Set the file name
+      document.body.appendChild(link);
+      link.click();
+  
+      // Clean up
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading video:", error);
+      alert("Failed to download video");
+    }
+  };
+
   // Play the video when currentVideo is set
   useEffect(() => {
     if (currentVideo && videoRef.current) {
@@ -198,14 +251,28 @@ const VideoPlayer = () => {
   const playVideo = async (video) => {
     if (Hls.isSupported()) {
       const hls = new Hls({
-        debug: true,
+        // debug: true,
+        autoLevelEnabled: true,
       });
+      hlsRef.current = hls;
       hls.loadSource(video.url);
       hls.attachMedia(videoRef.current);
 
       hls.on(Hls.Events.MANIFEST_PARSED, async () => {
         await fetchProgress(); // Fetch progress after the video is ready
         videoRef.current.play().catch((e) => console.error("Playback failed:", e));
+      });
+
+      hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+        console.log("Switched to level:", data.level);
+        if (selectedResolution) {
+          const currentLevel = hls.levels[data.level];
+          if (currentLevel.height !== parseInt(selectedResolution)) {
+            // If the player switched to a different resolution due to network conditions,
+            // update the selected resolution to reflect the current level.
+            setSelectedResolution(currentLevel.height.toString());
+          }
+        }
       });
 
       hls.on(Hls.Events.ERROR, (event, data) => {
@@ -248,7 +315,39 @@ const VideoPlayer = () => {
         <main className="content">
           <div className="video-player">
             <video ref={videoRef} controls width="640" height="360"></video>
+            <div className="resolution-selector">
+              <label>Select Resolution:</label>
+              <select
+                value={selectedResolution || ""}
+                onChange={(e) => handleResolutionChange(e.target.value)}
+              >
+                <option value="">Auto</option>
+                <option value="480">480p</option>
+                <option value="720">720p</option>
+                <option value="1080">1080p</option>
+              </select>
+            </div>
           </div>
+          <div className="download-buttons">
+            <button onClick={() => downloadVideo(currentVideo._id, currentVideo.title, "1080p")}>Download 1080p</button>
+            <button onClick={() => downloadVideo(currentVideo._id, currentVideo.title, "720p")}>Download 720p</button>
+            <button onClick={() => downloadVideo(currentVideo._id, currentVideo.title, "480p")}>Download 480p</button>
+          </div>
+          <h3>Resources</h3>
+            {resources.length === 0 ? (
+              <p>No resources found.</p>
+            ) : (
+              <ul>
+                {resources.map((resource) => (
+                  <li key={resource._id}>
+                    <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                      {resource.title}
+                    </a>
+                    <p>{resource.description}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           <div className="notes-section">
             <h2>Notes</h2>
             <textarea

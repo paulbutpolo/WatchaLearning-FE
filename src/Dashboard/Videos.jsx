@@ -321,9 +321,9 @@ function Videos() {
               </div>
             </div>
             <div className="download-buttons">
-              <button onClick={() => downloadVideo(video._id, video.name, "1080p")}>Download 1080p</button>
-              <button onClick={() => downloadVideo(video._id, video.name, "720p")}>Download 720p</button>
-              <button onClick={() => downloadVideo(video._id, video.name, "480p")}>Download 480p</button>
+              <button onClick={() => downloadVideo(video._id, video.title, "1080p")}>Download 1080p</button>
+              <button onClick={() => downloadVideo(video._id, video.title, "720p")}>Download 720p</button>
+              <button onClick={() => downloadVideo(video._id, video.title, "480p")}>Download 480p</button>
             </div>
             <div>
               <select 
