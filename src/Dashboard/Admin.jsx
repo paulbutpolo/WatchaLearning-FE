@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SideBar from '../shared/Sidebar';
 import LearningPath from './LearningPath'; 
 import Videos from './Videos';
+import UserManagement from './UserManagement';
 import './css/Admin.css'
 
 const AdminDashboard = () => {
@@ -23,12 +24,13 @@ const AdminDashboard = () => {
             <div className="nav-links">
               <a href="#" onClick={() => handleTabClick('learningPath')}>Learning Paths</a>
               <a href="#" onClick={() => handleTabClick('videos')}>Videos</a>
-              <a href="#">User Management</a>
+              <a href="#" onClick={() => handleTabClick('usermgmt')}>User Management</a>
               <a href="#">TBA</a>
             </div>
           </div>
           {activeTab === 'learningPath' && <LearningPath />}
           {activeTab === 'videos' && <Videos />}
+          {activeTab === 'usermgmt' && <UserManagement />}
         </main>
       </div>
     </div>

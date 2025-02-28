@@ -44,7 +44,7 @@ const Home = () => {
           <h1>Home</h1>
         </header>
         <main className="content-test">
-          {lastWatchedVideo ? (
+          {lastWatchedVideo && lastWatchedVideo.videoId ? (
             <div className="card">
               <h3>Last Watched Video</h3>
               <p>Title: {lastWatchedVideo.videoTitle}</p>

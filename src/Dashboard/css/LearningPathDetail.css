@@ -1,0 +1,66 @@
+/* Root container */
+.learningPathContainer {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Headings */
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subTitle {
+  margin-top: 20px;
+}
+
+/* Video List */
+.videoList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.videoItem {
+  background-color: #000;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form */
+
+.inputField {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submitButton {
+  background-color: #007bff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+/* Resources List */
+.resourceLink {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.resourceLink:hover {
+  text-decoration: underline;
+}
+
+.resourceDescription {
+  margin: 5px 0;
+}

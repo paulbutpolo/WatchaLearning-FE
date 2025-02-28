@@ -18,11 +18,13 @@ const LearningPath = () => {
   const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
   const currentVideos = videos.slice(indexOfFirstVideo, indexOfLastVideo);
 
-  const nextPage = () => {
+  const nextPage = (e) => {
+    e.preventDefault();
     if (indexOfLastVideo < videos.length) setCurrentPage(currentPage + 1);
   };
 
-  const prevPage = () => {
+  const prevPage = (e) => {
+    e.preventDefault();
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
@@ -310,7 +312,7 @@ const LearningPath = () => {
         </thead>
         <tbody>
           {learningPaths.map((path) => (
-            <tr key={path._id} onClick={() => handlePathClick(path._id)}>
+            <tr key={path._id}>
               <td>{path.title}</td>
               <td>{path.description}</td>
               <td>{path.createdBy}</td>
@@ -329,6 +331,7 @@ const LearningPath = () => {
                 </ul>
               </td>
               <td>
+                <button className="details-btn" onClick={() => handlePathClick(path._id)}>Details</button>
                 <button className="edit-btn" onClick={() => handleEdit(path)}>Edit</button>
                 <button className="delete-btn" onClick={() => handleDeleteLearningPath(path._id)}>Delete</button>
               </td>

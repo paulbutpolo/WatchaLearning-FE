@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import SideBar from '../shared/Sidebar';
+import './css/LearningPathDetail.css'
 
 const LearningPathDetail = () => {
   const { id } = useParams();
@@ -79,80 +81,115 @@ const LearningPathDetail = () => {
     setNewResource((prev) => ({ ...prev, [id]: value }));
   };
 
+  const handleDelete = async (resourceId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/resources/${resourceId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to delete learning path');
+      }
+
+      setResources(resources.filter((path) => path._id !== resourceId));
+      alert('Learning path deleted successfully!');
+      
+    } catch(error){
+      console.error('Error deleting learning resource:', error);
+    }
+  }
+
   if (!learningPath) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h2>{learningPath.title}</h2>
-      <p>{learningPath.description}</p>
+    <div className="container">
+      <SideBar />
+      <div className="main-content">
+        <header className="header">
+          <h1>Admin Dashboard</h1>
+        </header>
+        <main className="content-admin">
+          <div className="learningPathContainer">
+            <h2 className="title">{learningPath.title}</h2>
+            <p>{learningPath.description}</p>
 
-      {/* Videos Section */}
-      <h3>Videos</h3>
-      <ul>
-        {learningPath.videos
-          .sort((a, b) => a.order - b.order)
-          .map((video) => {
-            const selectedVideo = videos.find((v) => v._id === video.videoId);
-            return (
-              <li key={video.videoId}>
-                {selectedVideo ? selectedVideo.title : 'Video not found'} (Order: {video.order})
-              </li>
-            );
-          })}
-      </ul>
+            {/* Videos Section */}
+            <h3 className="subTitle">Videos</h3>
+            <ul className="videoList">
+              {learningPath.videos
+                .sort((a, b) => a.order - b.order)
+                .map((video) => {
+                  const selectedVideo = videos.find((v) => v._id === video.videoId);
+                  return (
+                    <li key={video.videoId} className="videoItem">
+                      {selectedVideo ? selectedVideo.title : "Video not found"} (Order: {video.order})
+                    </li>
+                  );
+                })}
+            </ul>
 
-      {/* Add Resource Form */}
-      <h3>Add Resource</h3>
-      <form onSubmit={handleAddResource}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={newResource.title}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            value={newResource.description}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="url">URL:</label>
-          <input
-            type="url"
-            id="url"
-            value={newResource.url}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Add Resource</button>
-      </form>
+            {/* Add Resource Form */}
+            <h3 className="subTitle">Add Resource</h3>
+            <form onSubmit={handleAddResource}>
+              <div>
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  className="inputField"
+                  value={newResource.title}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  className="inputField"
+                  value={newResource.description}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="url">URL:</label>
+                <input
+                  type="url"
+                  id="url"
+                  className="inputField"
+                  value={newResource.url}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="submitButton">Add Resource</button>
+            </form>
 
-      {/* Resources List */}
-      <h3>Resources</h3>
-      {resources.length === 0 ? (
-        <p>No resources found.</p>
-      ) : (
-        <ul>
-          {resources.map((resource) => (
-            <li key={resource._id}>
-              <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                {resource.title}
-              </a>
-              <p>{resource.description}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+            {/* Resources List */}
+            <h3 className="subTitle">Resources</h3>
+            {resources.length === 0 ? (
+              <p>No resources found.</p>
+            ) : (
+              <ul>
+                {resources.map((resource) => (
+                  <li key={resource._id}>
+                    <a href={resource.url} target="_blank" rel="noopener noreferrer" className="resourceLink">
+                      {resource.title}
+                    </a>
+                    <p className="resourceDescription">{resource.description}</p>
+                    <button onClick={() => handleDelete(resource._id)}>Delete</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

@@ -51,7 +51,7 @@
   cursor: not-allowed;
 }
 
-.submit-btn, .cancel-btn, .edit-btn, .delete-btn {
+.submit-btn, .cancel-btn, .edit-btn, .delete-btn, .details-btn {
   padding: 10px;
   border: none;
   cursor: pointer;
@@ -61,6 +61,10 @@
 }
 
 .submit-btn {
+  background-color: #28a745;
+}
+
+.details-btn {
   background-color: #28a745;
 }
 
@@ -89,5 +93,5 @@
 }
 
 .learning-path-table th {
-  background-color: #f4f4f4;
+  background-color: var(--tertiary-color);
 }
