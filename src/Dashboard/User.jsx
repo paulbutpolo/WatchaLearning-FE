@@ -14,7 +14,7 @@ const UserDashboard = () => {
     const fetchSubscription = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:3000/api/subscriber', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/subscriber`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSubscriptions(response.data);
@@ -29,7 +29,6 @@ const UserDashboard = () => {
   }, []);
 
   const handleButtonClick = (courseId) => {
-    console.log('Button clicked for course ID:', courseId);
     navigate(`/course/${courseId}`);
   };
 

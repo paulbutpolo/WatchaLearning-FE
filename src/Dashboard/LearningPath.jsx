@@ -31,7 +31,7 @@ const LearningPath = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/videos');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`);
         const data = await response.json();
         setVideos(data);
       } catch (error) {
@@ -45,7 +45,7 @@ const LearningPath = () => {
   useEffect(() => {
     const fetchLearningPaths = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/paths');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paths`);
         const data = await response.json();
         setLearningPaths(data);
       } catch (error) {
@@ -76,7 +76,7 @@ const LearningPath = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/paths', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paths`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ const LearningPath = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/paths/${editingPath._id}`,
+        `${import.meta.env.VITE_API_URL}/api/paths/${editingPath._id}`,
         {
           method: 'PUT',
           headers: {
@@ -196,7 +196,7 @@ const LearningPath = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/paths/${pathId}`,
+        `${import.meta.env.VITE_API_URL}/api/paths/${pathId}`,
         {
           method: 'DELETE',
           headers: {

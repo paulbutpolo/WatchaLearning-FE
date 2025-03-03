@@ -11,7 +11,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       const token = localStorage.getItem('authToken');
-      console.log(token)
       if (!token) {
         setError('No token found. Please log in.');
         setLoading(false);
@@ -19,7 +18,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/api/users/role', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/role`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

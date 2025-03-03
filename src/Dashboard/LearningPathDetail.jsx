@@ -15,18 +15,18 @@ const LearningPathDetail = () => {
     const fetchData = async () => {
       try {
         // Fetch learning path
-        const pathResponse = await fetch(`http://localhost:3000/api/paths/${id}`);
+        const pathResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/paths/${id}`);
         const pathData = await pathResponse.json();
         setLearningPath(pathData);
 
         // Fetch videos
-        const videosResponse = await fetch('http://localhost:3000/api/videos');
+        const videosResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/videos`);
         const videosData = await videosResponse.json();
         setVideos(videosData);
 
         // Fetch resources
         const resourcesResponse = await fetch(
-          `http://localhost:3000/api/learning-paths/${id}/resources`
+          `${import.meta.env.VITE_API_URL}/api/learning-paths/${id}/resources`
         );
         const resourcesData = await resourcesResponse.json();
         setResources(resourcesData);
@@ -50,7 +50,7 @@ const LearningPathDetail = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/learning-paths/${id}/resources`,
+        `${import.meta.env.VITE_API_URL}/api/learning-paths/${id}/resources`,
         {
           method: 'POST',
           headers: {
@@ -84,7 +84,7 @@ const LearningPathDetail = () => {
   const handleDelete = async (resourceId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/resources/${resourceId}`,
+        `${import.meta.env.VITE_API_URL}/api/resources/${resourceId}`,
         {
           method: 'DELETE',
         }

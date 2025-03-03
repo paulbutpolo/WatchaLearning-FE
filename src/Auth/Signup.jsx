@@ -15,7 +15,7 @@ const Signup = () => {
     e.preventDefault(); // Prevent form submission refresh
 
     try {
-      axios.post('http://localhost:3000/api/signup', { username, email, password });
+      axios.post(`${import.meta.env.VITE_API_URL}/api/signup`, { username, email, password });
       
       // Notify the user of successful signup
       alert('Signup successful! Please log in.');
@@ -33,7 +33,7 @@ const Signup = () => {
       <div className="login-container">
         <h1>Signup Page</h1>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <form className="login-form" onSubmit={{handleSignup}}>
+        <form className="login-form" onSubmit={handleSignup}>
           <input
             type="text"
             placeholder='Username'

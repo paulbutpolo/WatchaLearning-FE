@@ -21,7 +21,7 @@ const VideoPlayer = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/video/${videoId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/video/${videoId}`);
         if (!response.ok) {
           throw new Error("Video not found");
         }
@@ -35,7 +35,7 @@ const VideoPlayer = () => {
 
     const fetchSubscription = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/subscriber/check", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/subscriber/check`, {
           params: { courseId: id },
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const VideoPlayer = () => {
 
     const fetchNotes = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/notes/${videoId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/notes/${videoId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +66,7 @@ const VideoPlayer = () => {
     const fetchResource = async () => {
       try {
         const resourcesResponse = await fetch(
-          `http://localhost:3000/api/learning-paths/${id}/resources`
+          `${import.meta.env.VITE_API_URL}/api/learning-paths/${id}/resources`
         );
         const resourcesData = await resourcesResponse.json();
         setResources(resourcesData);
@@ -85,7 +85,7 @@ const VideoPlayer = () => {
   const fetchProgress = async () => {
     console.log("fething progress..")
     try {
-      const response = await axios.get("http://localhost:3000/api/tracks/get-progress", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks/get-progress`, {
         params: { videoId, courseId: id },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@ const VideoPlayer = () => {
       });
 
       try {
-        await axios.put(`http://localhost:3000/api/subscriber/update-progress`, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/subscriber/update-progress`, {
           userId: subscription.userId,
           courseId: subscription.courseId,
           progress: updatedProgress,
@@ -134,7 +134,7 @@ const VideoPlayer = () => {
       const watchedPercentage = (currentTime / duration) * 100;
       const completed = watchedPercentage >= 90;
       try {
-        const response = await axios.post("http://localhost:3000/api/tracks/save-progress", {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/tracks/save-progress`, {
           videoId,
           courseId: id,
           currentProgress: currentTime,
@@ -156,7 +156,7 @@ const VideoPlayer = () => {
   const handleSaveNote = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/notes",
+        `${import.meta.env.VITE_API_URL}/api/notes`,
         { userId: subscription.userId, videoId, noteText },
         {
           headers: {
@@ -174,7 +174,7 @@ const VideoPlayer = () => {
   const handleUpdateNote = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/notes/${editingNoteId}`,
+        `${import.meta.env.VITE_API_URL}/api/notes/${editingNoteId}`,
         { noteText },
         {
           headers: {
@@ -192,7 +192,7 @@ const VideoPlayer = () => {
 
   const handleDeleteNote = async (noteId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/notes/${noteId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/notes/${noteId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -217,7 +217,7 @@ const VideoPlayer = () => {
   const downloadVideo = async (videoId, videoName, resolution) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/video/${videoId}/download/${resolution}`,
+        `${import.meta.env.VITE_API_URL}/api/video/${videoId}/download/${resolution}`,
         {
           responseType: "blob", // Ensure the response is treated as a binary file
         }

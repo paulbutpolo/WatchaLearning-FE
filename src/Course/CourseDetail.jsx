@@ -13,7 +13,7 @@ const CourseDetail = () => {
     // Fetch the specific learning path from the backend
     const fetchLearningPath = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/paths/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paths/${id}`);
         const data = await response.json();
         setLearningPath(data);
       } catch (error) {
@@ -24,7 +24,7 @@ const CourseDetail = () => {
     // Check if the user is subscribed
     const checkSubscriptionStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/subscriber/check?courseId=${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/subscriber/check?courseId=${id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -46,7 +46,7 @@ const CourseDetail = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/subscriber/create', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/subscriber/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const CourseDetail = () => {
 
   const handleUnsubscribe = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/subscriber/delete', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/subscriber/delete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

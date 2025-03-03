@@ -14,10 +14,9 @@ const Home = () => {
     const fetchLastWatchedVideo = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:3000/api/tracks/last-watched', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks/last-watched`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(response);
         setLastWatchedVideo(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching last watched video');

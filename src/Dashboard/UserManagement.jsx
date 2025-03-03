@@ -14,7 +14,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/users", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -42,7 +42,7 @@ const UserManagement = () => {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/signup', newUser);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/signup`, newUser);
       setError('');
       setNewUser({ username: '', email: '', password: '' });
       fetchUsers(); // Refresh the user list after adding a new user
@@ -58,7 +58,7 @@ const UserManagement = () => {
 
   const updateUser = async () => {
     try {
-      const res = await axios.put(`http://localhost:3000/api/users/${editingUser._id}`, editingUser, {
+      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/${editingUser._id}`, editingUser, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ const UserManagement = () => {
   
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/users/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

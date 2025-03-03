@@ -12,7 +12,7 @@ const Course = () => {
   useEffect(() => {
     const fetchLearningPaths = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/paths');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/paths`);
         const data = await response.json();
         setLearningPaths(data);
       } catch (error) {
@@ -23,7 +23,7 @@ const Course = () => {
     const fetchSubscription = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://localhost:3000/api/subscriber', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/subscriber`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSubscriptions(response.data);

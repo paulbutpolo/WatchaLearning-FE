@@ -37,7 +37,7 @@ function Videos() {
   }, []);
 
   const fetchVideos = async () => {
-    const res = await axios.get("http://localhost:3000/api/videos");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/videos`);
     setVideos(res.data);
   };
 
@@ -54,7 +54,7 @@ function Videos() {
     formData.append("description", description);
   
     try {
-      const uploadRes = await axios.post("http://localhost:3000/api/videos/upload", formData, {
+      const uploadRes = await axios.post(`${import.meta.env.VITE_API_URL}/api/videos/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}`},
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -67,12 +67,11 @@ function Videos() {
       const { originalFilename } = uploadRes.data;
   
       if (originalFilename) {
-        const eventSource = new EventSource(`http://localhost:3000/api/videos/progress/${encodeURIComponent(originalFilename)}`);
+        const eventSource = new EventSource(`${import.meta.env.VITE_API_URL}/api/videos/progress/${encodeURIComponent(originalFilename)}`);
   
         eventSource.onmessage = (event) => {
           const data = JSON.parse(event.data);
           setTranscodingProgress(data.progress);
-          console.log(`${data.progress}%`)
           if (data.progress >= 100) {
             setTimeout(() => {
               eventSource.close();
@@ -109,7 +108,7 @@ function Videos() {
     formData.append("language", selectedLanguage); // Send language to server
   
     try {
-      const res = await axios.post(`http://localhost:3000/api/video/${videoId}/subtitles`, formData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/video/${videoId}/subtitles`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
@@ -123,7 +122,7 @@ function Videos() {
 
   const deleteVideo = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/video/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/video/${id}`);
       alert("Video deleted successfully");
       fetchVideos(); // Refresh the video list
     } catch (error) {
@@ -143,7 +142,6 @@ function Videos() {
       window.currentHls = hls;
       // setCurrentPlayingVideo(video);
       hls.loadSource(video.url);
-      console.log("tested", video.url)
       hls.attachMedia(videoRef.current);
       hls.on(Hls.Events.ERROR, (event, data) => {
         console.error('HLS Error:', data);
@@ -194,7 +192,7 @@ function Videos() {
     try {
       const currentTime = videoRef.current.currentTime; // Save current playback position
   
-      await axios.post(`http://localhost:3000/api/video/${videoName}/adjust-subtitle`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/video/${videoName}/adjust-subtitle`, {
         language,
         timeOffset: offset
       });
@@ -217,7 +215,7 @@ function Videos() {
   const downloadVideo = async (videoId, videoName, resolution) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/video/${videoId}/download/${resolution}`,
+        `${import.meta.env.VITE_API_URL}/api/video/${videoId}/download/${resolution}`,
         {
           responseType: "blob", // Ensure the response is treated as a binary file
         }
@@ -242,7 +240,7 @@ function Videos() {
 
   // const saveProgress = async (videoId, currentTime) => {
   //   try {
-  //     await axios.post("http://localhost:3000/api/tracks/save-progress", {
+  //     await axios.post(`${import.meta.env.VITE_API_URL}/api/tracks/save-progress", {
   //       videoId,
   //       currentProgress: currentTime,
   //     }, 
@@ -259,7 +257,7 @@ function Videos() {
   
   // const getProgress = async (videoId) => {
   //   try {
-  //     const res = await axios.get("http://localhost:3000/api/tracks/get-progress", {
+  //     const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks/get-progress", {
   //       params: { videoId },
   //     },{
   //       headers: {
