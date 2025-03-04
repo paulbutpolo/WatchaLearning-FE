@@ -237,39 +237,6 @@ function Videos() {
       alert("Failed to download video");
     }
   };
-
-  // const saveProgress = async (videoId, currentTime) => {
-  //   try {
-  //     await axios.post(`${import.meta.env.VITE_API_URL}/api/tracks/save-progress", {
-  //       videoId,
-  //       currentProgress: currentTime,
-  //     }, 
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //     console.log("Progress saved");
-  //   } catch (error) {
-  //     console.error("Error saving progress:", error);
-  //   }
-  // };
-  
-  // const getProgress = async (videoId) => {
-  //   try {
-  //     const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks/get-progress", {
-  //       params: { videoId },
-  //     },{
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //     return res.data.currentProgress || 0;
-  //   } catch (error) {
-  //     console.error("Error fetching progress:", error);
-  //     return 0;
-  //   }
-  // };
   
   return (
     <div style={{ padding: 20 }}>
