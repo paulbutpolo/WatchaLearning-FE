@@ -4,7 +4,7 @@ import Home from './Home/Home';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Course from './Course/Course';
 import CourseDetail from './Course/CourseDetail';
 import VideoPlayer from './Course/VideoPlayer';
