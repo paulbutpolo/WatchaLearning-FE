@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SideBar from '../shared/Sidebar';
 import axios from 'axios'; // Assuming you're using axios for API calls
 import { useNavigate } from 'react-router-dom';
-import './css/Home.css'
+// import './css/Home.css'
 
 const Home = () => {
   const [lastWatchedVideo, setLastWatchedVideo] = useState(null);

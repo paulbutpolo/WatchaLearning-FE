@@ -1,54 +1,62 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
-import Home from './Home/Home';
-import Dashboard from './Dashboard/Dashboard';
-import Login from './Auth/Login';
-import Signup from './Auth/Signup';
 import React, { useEffect, useState } from 'react';
-import Course from './Course/Course';
-import CourseDetail from './Course/CourseDetail';
-import VideoPlayer from './Course/VideoPlayer';
-import LearningPathDetail from './Dashboard/LearningPathDetail'
-import NotFound from './NotFound';
+import Auth from './Auth/Auth';
+import ProtectedRoute from './ProtectedRoute';
+import Unauthorized from './shared/Unauthorized';
+import NotFound from './shared/NotFound';
+import Loader from './shared/Loader';
+import Dashboard from './Dashboard/Dashboard';
+import VideoManagement from './Video/VideoManagement';
+import VideoUpload from './Video/VideoUpload';
+import VideoTest from './Video/VideoTest';
+import CourseManagement from './Course/CourseManagement';
+import Learn from './Learn/Learn';
+import LearnViewer from './Learn/LearnViewer';
+import TrackerCourse from './Tracker/TrackerCourse';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
 
-  // Check if the user is authenticated on initial load
   useEffect(() => {
     const token = localStorage.getItem('authToken');
 
     if (token) {
-      // Assume the token is valid (backend will verify it on protected routes)
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
     }
 
-    setLoading(false); // Set loading to false after checking the token
+    setLoading(false);
   }, []);
 
-  // Show a loading spinner or message while checking authentication
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/auth" element={<Auth setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Protected routes */}
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} requiredRole="admin" />}>
+          <Route path="/videotest" element={<VideoTest />} /> {/* Staging/Testing grounds of the bullmq transcode */}
+          <Route path="/videoupload" element={<VideoUpload />} />
+          <Route path="/videolist" element={<VideoManagement />} />
+          <Route path="/courselist" element={<CourseManagement />} />
+          <Route path="/tracker" element={<TrackerCourse />} />
+        </Route>
+
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/course" element={<Course />} />
-          <Route path="/course/:id" element={<CourseDetail />} />
-          <Route path="/course/:id/video/:videoId" element={<VideoPlayer />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/:id" element={<LearningPathDetail />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/course/:id" element={<LearnViewer />} />
+          {/* <Route path="/course/:id" element={<CourseDetail />} />
+          <Route path="/course/:id/video/:videoId" element={<VideoPlayer />} /> */}
+          {/* <Route path="/dashboard/:id" element={<LearningPathDetail />} /> */}
         </Route>
 
         {/* Default route */}
@@ -56,9 +64,9 @@ const App = () => {
           path="/"
           element={
             isAuthenticated ? (
-              <Navigate to="/home" replace />
+              <Navigate to="/dashboard" replace />
             ) : (
-              <Navigate to="/login" replace />
+              <Navigate to="/auth" replace />
             )
           }
         />

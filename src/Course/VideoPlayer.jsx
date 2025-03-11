@@ -83,7 +83,6 @@ const VideoPlayer = () => {
 
   // Fetch the saved progress for the current video
   const fetchProgress = async () => {
-    console.log("fething progress..")
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks/get-progress`, {
         params: { videoId, courseId: id },

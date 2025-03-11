@@ -25,3 +25,17 @@
 .subscription-item button:hover {
   background-color: #0056b3;
 }
+
+.progress-bar {
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-bar-fill {
+  height: 10px;
+  background-color: #76c7c0;
+  border-radius: 5px;
+}

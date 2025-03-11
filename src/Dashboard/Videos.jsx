@@ -68,7 +68,6 @@ function Videos() {
   
       if (originalFilename) {
         const eventSource = new EventSource(`${import.meta.env.VITE_API_URL}/api/videos/progress/${encodeURIComponent(originalFilename)}`);
-  
         eventSource.onmessage = (event) => {
           const data = JSON.parse(event.data);
           setTranscodingProgress(data.progress);

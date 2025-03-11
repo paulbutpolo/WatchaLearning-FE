@@ -14,7 +14,7 @@
   background-color: var(--tertiary-color);
 }
 
-.courses-table tr:hover {
+/* .courses-table tr:hover {
   background-color: var(--secondary-color);
   cursor: pointer;
-}
+} */

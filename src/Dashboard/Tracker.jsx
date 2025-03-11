@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/Tracker.css'
+// import './css/Tracker.css'
 
 const Tracker = () => {
   const token = localStorage.getItem('authToken');

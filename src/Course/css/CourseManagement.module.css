@@ -1,0 +1,410 @@
+.courseContainer { 
+  padding: 20px;
+}
+.controlPanel { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.searchInput { 
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: var(--text-primary);
+  width: 300px;
+}
+.addButton { 
+  background-color: var(--primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+.coursesGrid { 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.courseCard { 
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+.courseCardSelected { 
+  border: 2px solid var(--primary);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.courseImageContainer { 
+  height: 160px;
+  overflow: hidden;
+}
+.courseImage { 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.courseContent { 
+  padding: 16px;
+}
+.courseTitle { 
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+.courseInfo { 
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.courseInfoItem { 
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+.courseDescription { 
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; */
+  overflow: hidden;
+}
+.courseActions { 
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.actionButton { 
+  background-color: var(--bg-tertiary);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+}
+.editButton { 
+  color: var(--info);
+}
+.deleteButton { 
+  color: var(--danger);
+}
+.detailsSection { 
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+.detailsHeader { 
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.detailsTitle { 
+  font-size: 24px;
+  font-weight: 600;
+}
+.detailsButtonGroup { 
+  display: flex;
+  gap: 10px;
+}
+.detailsButton { 
+  background-color: var(--bg-tertiary);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+}
+.editCourseButton { 
+  background-color: var(--info);
+  color: var(--text-primary);
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+.deleteCourseButton { 
+  background-color: var(--danger);
+  color: var(--text-primary);
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+.detailsInfo { 
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.detailsInfoItem { 
+  padding: 12px;
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+}
+.detailsInfoTitle { 
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+.detailsInfoValue { 
+  font-size: 16px;
+  font-weight: 500;
+}
+.detailsDescription { 
+  margin-bottom: 24px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.modulesHeader { 
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.modulesList { 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.moduleItem { 
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+}
+.moduleTitle { 
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.moduleDuration { 
+  color: var(--text-tertiary);
+  font-weight: normal;
+}
+.moduleDescription { 
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.formOverlay { 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.formContainer { 
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  width: 600px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+.formHeader { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.formTitle { 
+  font-size: 20px;
+  font-weight: 600;
+}
+.closeButton { 
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 24px;
+  cursor: pointer;
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+.formGroup { 
+  margin-bottom: 16px;
+}
+.formLabel { 
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.formInput { 
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 16px;
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+}
+.formTextarea { 
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 16px;
+  min-height: 120px;
+  resize: vertical;
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+}
+.formButtons { 
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.cancelButton { 
+  background-color: var(--bg-tertiary);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+}
+.submitButton { 
+  background-color: var(--primary);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  color: var(--text-primary);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+.modulesSection { 
+  margin-top: 24px;
+}
+.addModuleButton { 
+  background-color: var(--bg-tertiary);
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+}
+.moduleFormItem { 
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.moduleFormHeader { 
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.moduleFormTitle { 
+  font-weight: 500;
+}
+.removeModuleButton { 
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+}
+.emptyState { 
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-tertiary);
+}
+.emptyStateIcon { 
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.emptyStateText { 
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+.moduleVideo {
+  margin-top: 10px;
+}
+
+.moduleResources {
+  margin-top: 10px;
+}
+
+.moduleResourcesList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resourcesList {
+  margin-top: 10px;
+}
+
+.resourceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.removeResourceButton {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+}

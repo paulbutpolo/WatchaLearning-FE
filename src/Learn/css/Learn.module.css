@@ -1,0 +1,352 @@
+.mainContent {
+  margin-left: 240px; /* Adjust based on your sidebar width */
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+.learningContainer {
+  padding: 20px;
+}
+
+.pageTitle {
+  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Course Grid and Cards */
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.courseCard {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+}
+
+.courseCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.courseImageContainer {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.courseImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.courseLevel {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.courseContent {
+  padding: 16px;
+}
+
+.courseTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.courseDescription {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.courseMetadata {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.courseDuration, .courseStudents {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.courseModules {
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.icon {
+  margin-right: 4px;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: var(--bg-accent);
+  border: none;
+  color: var(--text-primary);
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.closeButton:hover {
+  background-color: var(--primary);
+}
+
+.modalHeader {
+  display: flex;
+  padding: 20px;
+  background-color: var(--bg-tertiary);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modalImageContainer {
+  width: 240px;
+  height: 180px;
+  flex-shrink: 0;
+  margin-right: 20px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modalHeaderInfo {
+  flex: 1;
+}
+
+.modalTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.modalDescription {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.modalMetadata {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metadataItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.viewButton {
+  margin-left: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.viewButton:hover {
+  background-color: var(--secondary-hover);
+}
+
+.subscribeButton {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscribeButton:hover {
+  background-color: var(--primary-hover);
+}
+
+.unsubscribeButton {
+  background-color: var(--danger);
+}
+
+.unsubscribeButton:hover {
+  background-color: #c0392b;
+}
+
+/* Course Modules List */
+.modulesList {
+  padding: 20px;
+}
+
+.modulesTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.moduleCard {
+  background-color: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.moduleHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.moduleNumber {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-light);
+}
+
+.moduleDuration {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.moduleTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.moduleDescription {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.moduleContent {
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.videoInfo {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.resourcesList {
+  margin-top: 16px;
+}
+
+.resourcesTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.resourceItem {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0;
+  }
+  
+  .modalHeader {
+    flex-direction: column;
+  }
+  
+  .modalImageContainer {
+    width: 100%;
+    margin-bottom: 16px;
+    margin-right: 0;
+  }
+  
+  .courseGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}

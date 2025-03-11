@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import SideBar from '../shared/Sidebar';
-import './css/CourseDetail.css'
+// import './css/CourseDetail.css'
 
 const CourseDetail = () => {
   const { id } = useParams();

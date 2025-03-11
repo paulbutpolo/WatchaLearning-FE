@@ -1,41 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SideBar from '../shared/Sidebar';
-import LearningPath from './LearningPath'; 
-import Videos from './Videos';
-import UserManagement from './UserManagement';
-import Tracker from './Tracker';
-import './css/Admin.css'
+import Header from '../shared/Header'
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState(''); // State to manage the active tab
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
-
   return (
-    <div className="container">
+    <>
       <SideBar />
       <div className="main-content">
-        <header className="header">
-          <h1>Admin Dashboard</h1>
-        </header>
-        <main className="content-admin">
-          <div className="navbar">
-            <div className="nav-links">
-              <a href="#" onClick={() => handleTabClick('learningPath')}>Learning Paths</a>
-              <a href="#" onClick={() => handleTabClick('videos')}>Videos</a>
-              <a href="#" onClick={() => handleTabClick('tracker')}>Tracker</a>
-              <a href="#" onClick={() => handleTabClick('usermgmt')}>User Management</a>
-            </div>
-          </div>
-          {activeTab === 'learningPath' && <LearningPath />}
-          {activeTab === 'videos' && <Videos />}
-          {activeTab === 'tracker' && <Tracker />}
-          {activeTab === 'usermgmt' && <UserManagement />}
-        </main>
+        <Header />
+        Admin test
       </div>
-    </div>
+    </>
   );
 };
 
