@@ -23,7 +23,6 @@ const makeApiCall = async (endpoint, method = 'get', data = null, config = {}) =
     }
     console.log(axiosConfig)
     const response = await axios(axiosConfig);
-    console.log(response.data)
 
     // For binary responses (like file downloads), return the whole response
     // This is detected by checking if responseType is 'blob'

@@ -6,6 +6,7 @@ import makeApiCall from '../../api/Api';
 import CourseForm from './CourseForm';
 import CourseDetails from './CourseDetails';
 import CourseCard from './CourseCard';
+import ResourceForm from './ResourceForm';
 
 const CourseManagement = () => {
   const [courses, setCourses] = useState([]);
@@ -21,6 +22,9 @@ const CourseManagement = () => {
   });
   const [availableVideos, setAvailableVideos] = useState([]);
   const [availableResources, setAvailableResources] = useState([]);
+
+  const [showResourceForm, setShowResourceForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchCourses = async () => {
     const res = await makeApiCall('/api/courses/', 'get');
@@ -180,6 +184,19 @@ const CourseManagement = () => {
     }
   };
 
+  const handleAddResources = async (resourceData) => {
+    setIsLoading(true);
+    try {
+      makeApiCall('/api/resource', 'post', resourceData)
+      setShowResourceForm(false);
+    } catch (error) {
+      console.error('Error adding resource:', error);
+      // Handle error (show message, etc.)
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <SideBar />
@@ -189,6 +206,9 @@ const CourseManagement = () => {
           <div className={styles.controlPanel}>
             <button className={styles.addButton} onClick={handleAddCourse}>
               Add New Course
+            </button>
+            <button className={styles.addResource} onClick={() => setShowResourceForm(true)}>
+              Add Resources
             </button>
           </div>
 
@@ -237,6 +257,13 @@ const CourseManagement = () => {
               availableResources={availableResources} 
               setShowForm={setShowForm} 
               handleFormSubmit={handleFormSubmit} 
+            />
+          )}
+          {showResourceForm && (
+            <ResourceForm 
+              onSubmit={handleAddResources}
+              setShowForm={setShowResourceForm}
+              isLoading={isLoading}
             />
           )}
         </div>
