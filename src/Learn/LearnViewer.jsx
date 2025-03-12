@@ -27,6 +27,7 @@ const LearnViewer = () => {
   const navigate = useNavigate();
 
   const API_URL = import.meta.env.VITE_MINIO_URL;
+  
   useEffect(() => {
     const fetchCourse = async () => {
 
