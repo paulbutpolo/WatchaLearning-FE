@@ -1,7 +1,7 @@
 // VideoUpload.jsx
 import React, { useState, useEffect } from 'react';
 import HLSPlayer from './HLSPlayer';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const API_URL = 'http://localhost:9000';
 

@@ -6,7 +6,7 @@ import Header from '../shared/Header';
 import Loader from '../shared/Loader';
 import HLSPlayer from '../Video/HLSPlayer';
 import styles from './css/LearnViewer.module.css';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const LearnViewer = () => {
   const { id } = useParams(); // Extract the `id` parameter from the URL
@@ -26,7 +26,7 @@ const LearnViewer = () => {
   const [downloadingResolution, setDownloadingResolution] = useState(null);
   const navigate = useNavigate();
 
-  const API_URL = 'http://localhost:9000';
+  const API_URL = import.meta.env.VITE_MINIO_URL;
   useEffect(() => {
     const fetchCourse = async () => {
 

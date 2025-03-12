@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './css/VideoDetailsModal.module.css';
 import HLSPlayer from './HLSPlayer';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const formatFileSize = (size) => {
   if (size >= 1e9) return (size / 1e9).toFixed(2) + " GB";

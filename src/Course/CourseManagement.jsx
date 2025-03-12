@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SideBar from '../shared/Sidebar';
 import Header from '../shared/Header';
 import styles from './css/CourseManagement.module.css';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 import CourseForm from './CourseForm';
 import CourseDetails from './CourseDetails';
 import CourseCard from './CourseCard';

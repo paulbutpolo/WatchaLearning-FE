@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideBar from '../shared/Sidebar';
 import Header from '../shared/Header';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 import styles from './css/TrackerCourse.module.css';
 
 const TrackerCourse = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Auth.module.css';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const Auth = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();

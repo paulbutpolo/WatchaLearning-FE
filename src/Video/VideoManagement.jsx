@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback }  from 'react';
 import VideoTable from './VideoTable';
 import SideBar from '../shared/Sidebar';
 import Header from '../shared/Header';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const VideoManagement = () => {
   const [videos, setVideos] = useState([]);

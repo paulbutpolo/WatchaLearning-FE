@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 import styles from './css/HLSPlayer.module.css';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 
 const getSavedProgress = async (courseId, videoId) => {
   const endpoint = `/api/tracks/get-progress?courseId=${courseId}&videoId=${videoId}`;

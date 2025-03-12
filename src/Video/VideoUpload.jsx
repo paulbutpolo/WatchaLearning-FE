@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import SideBar from '../shared/Sidebar';
 import Header from '../shared/Header';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 import styles from './css/VideoUpload.module.css'
 
 const VideoUpload = () => {

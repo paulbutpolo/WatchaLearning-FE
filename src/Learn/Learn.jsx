@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideBar from '../shared/Sidebar';
 import Header from '../shared/Header';
-import makeApiCall from '../../api/Api';
+import makeApiCall from '../api/Api';
 import styles from './css/Learn.module.css';
 import LearnCard from './LearnCard';
 import LearnModal from './LearnModal';
