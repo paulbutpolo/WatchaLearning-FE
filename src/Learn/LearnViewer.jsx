@@ -15,6 +15,7 @@ const LearnViewer = () => {
   const [error, setError] = useState(null);
   const [activeModule, setActiveModule] = useState(0);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [resourceUrls, setResourceUrls] = useState({});
   const [isDownloadOptionsOpen, setIsDownloadOptionsOpen] = useState(false);
   const [currentNote, setCurrentNote] = useState('');
   const [editingNoteId, setEditingNoteId] = useState(null);
@@ -59,10 +60,16 @@ const LearnViewer = () => {
       handlePlayVideo(videoId);
     } else {
       console.warn('Video ID is missing or undefined.');
-      setCurrentPlayingVideo(null); // Clear any previous video data
+      setCurrentPlayingVideo(null);
     }
+  }, [activeModule, course]);
 
+  useEffect(() => {
+    const videoId = course?.modules[activeModule]?.video?.id;
+  
     const fetchNotes = async () => {
+      if (!videoId) return;
+  
       try {
         const response = await makeApiCall(`/api/notes/${id}/${videoId}`);
         setNotes(response);
@@ -70,9 +77,15 @@ const LearnViewer = () => {
         console.error('Error fetching notes:', error);
       }
     };
-
+  
     fetchNotes();
-  }, [activeModule, course]);
+  }, [course, activeModule, id]);
+
+  useEffect(() => {
+    if (isResourcesOpen && currentModule.resources.length > 0) {
+      fetchResourceUrls();
+    }
+  }, [isResourcesOpen]);
 
   if (loading) {
     return <Loader/>;
@@ -217,6 +230,7 @@ const LearnViewer = () => {
     setIsLoading(true);
     try {
       const response = await makeApiCall(`/api/videos/${id}/hls-info`);
+      // In production or in server, this will work masterPlaylist: `/${response.masterPlaylist}` for some reason it doesnt need the url. no idea why :D
       const videoData = {
         id,
         masterPlaylist: `${API_URL}/${response.masterPlaylist}`,
@@ -230,8 +244,17 @@ const LearnViewer = () => {
       setIsLoading(false);
     }
   };
-  
 
+  const fetchResourceUrls = async () => {
+    const resourceIds = currentModule.resources.map(resource => resource._id);
+    try {
+      const data = await makeApiCall('/api/resources/url', 'post', { resourceIds });
+      setResourceUrls(data); // Assuming the response is a map of { resourceId: url }
+    } catch (error) {
+      console.error('Error fetching resource URLs:', error);
+    }
+  };
+  
   return (
     <>
       <SideBar />
@@ -448,7 +471,12 @@ const LearnViewer = () => {
                       <li key={resource._id.toString()} className={styles.resourceItem}>
                         <span className={styles.resourceIcon}>📄</span>
                         <span className={styles.resourceTitle}>{resource.title}</span>
-                        <button className={styles.downloadButton}>View Page</button>
+                        <button
+                          className={styles.downloadButton}
+                          onClick={() => window.open(resourceUrls[resource._id], '_blank')}
+                        >
+                          View Page
+                        </button>
                       </li>
                     ))}
                   </ul>

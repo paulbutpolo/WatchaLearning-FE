@@ -1,0 +1,323 @@
+/* AccountsManager.module.css */
+
+.mainContent {
+  margin-left: 240px; /* Adjust based on your sidebar width */
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+.accountsContainer {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pageTitle {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.contentLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .contentLayout {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Users List Section */
+.usersList {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: var(--bg-accent);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tableHeader h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.refreshButton {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.refreshButton:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Users Table */
+.tableContainer {
+  overflow-x: auto;
+}
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usersTable th {
+  background-color: var(--bg-accent);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.usersTable td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.usersTable tr:hover {
+  background-color: var(--bg-accent);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.viewButton, .editButton, .deleteButton, .closeButton, .submitButton, .cancelButton {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.viewButton {
+  background-color: var(--info);
+  color: white;
+}
+
+.viewButton:hover {
+  background-color: #2980b9;
+}
+
+.editButton {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.editButton:hover {
+  background-color: var(--secondary-hover);
+}
+
+.deleteButton {
+  background-color: var(--danger);
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.closeButton {
+  background-color: var(--bg-accent);
+  color: var(--text-secondary);
+}
+
+.closeButton:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.submitButton {
+  background-color: var(--success);
+  color: white;
+}
+
+.submitButton:hover {
+  background-color: #00a382;
+}
+
+.cancelButton {
+  background-color: var(--bg-accent);
+  color: var(--text-secondary);
+}
+
+.role {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.user {
+  background-color: var(--info);
+  color: white;
+}
+
+.admin {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* User Panel Section */
+.userPanel {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* User Details */
+.userDetails {
+  padding: 24px;
+}
+
+.userDetails h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detailItem {
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+.detailItem strong {
+  font-weight: 500;
+  color: var(--text-primary);
+  display: inline-block;
+  width: 100px;
+}
+
+.detailActions {
+  margin-top: 24px;
+  display: flex;
+  gap: 8px;
+}
+
+/* Edit Form */
+.editForm {
+  padding: 24px;
+}
+
+.editForm h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.formGroup input, .formGroup select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-accent);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+/* Status Messages */
+.loading, .error, .noUsers {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.successMessage {
+  background-color: var(--success);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.errorMessage {
+  background-color: var(--danger);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closeError {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.resetButton {
+  background-color: var(--warning);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.resetButton:hover {
+  background-color: #e67e22;
+}

@@ -13,6 +13,7 @@ import CourseManagement from './Course/CourseManagement';
 import Learn from './Learn/Learn';
 import LearnViewer from './Learn/LearnViewer';
 import TrackerCourse from './Tracker/TrackerCourse';
+import AccountsManager from './Account/AccountsManager';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/videolist" element={<VideoManagement />} />
           <Route path="/courselist" element={<CourseManagement />} />
           <Route path="/tracker" element={<TrackerCourse />} />
+          <Route path="/accounts" element={<AccountsManager />} />
         </Route>
 
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>

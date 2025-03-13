@@ -7,6 +7,7 @@ import CourseForm from './CourseForm';
 import CourseDetails from './CourseDetails';
 import CourseCard from './CourseCard';
 import ResourceForm from './ResourceForm';
+import ConfirmationModal from '../shared/ConfirmationModal';
 
 const CourseManagement = () => {
   const [courses, setCourses] = useState([]);
@@ -25,6 +26,8 @@ const CourseManagement = () => {
 
   const [showResourceForm, setShowResourceForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [courseToDelete, setCourseToDelete] = useState(null);
 
   const fetchCourses = async () => {
     const res = await makeApiCall('/api/courses/', 'get');
@@ -197,6 +200,19 @@ const CourseManagement = () => {
     }
   };
 
+  const handleDeleteClick = (courseId) => {
+    setCourseToDelete(courseId);
+  };
+
+  const confirmDelete = () => {
+    handleDeleteCourse(courseToDelete);
+    setCourseToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setCourseToDelete(null);
+  };
+
   return (
     <>
       <SideBar />
@@ -229,7 +245,7 @@ const CourseManagement = () => {
                   selectedCourse={selectedCourse}
                   handleSelectCourse={handleSelectCourse}
                   handleEditCourse={handleEditCourse}
-                  handleDeleteCourse={handleDeleteCourse}
+                  handleDeleteCourse={handleDeleteClick}
                 />
               ))}
             </div>
@@ -266,6 +282,12 @@ const CourseManagement = () => {
               isLoading={isLoading}
             />
           )}
+          <ConfirmationModal
+            isOpen={courseToDelete !== null}
+            onConfirm={confirmDelete}
+            onCancel={cancelDelete}
+            message="Are you sure you want to delete this course?"
+          />
         </div>
       </div>
     </>
